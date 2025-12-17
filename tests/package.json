@@ -1,0 +1,17 @@
+{
+  "name": "xdb-memory-api-tests",
+  "version": "1.0.0",
+  "description": "Test suite for XDB Memory Management API",
+  "main": "memory-api.test.js",
+  "scripts": {
+    "test": "node --test memory-api.test.js",
+    "test:verbose": "node --test --test-reporter=spec memory-api.test.js"
+  },
+  "keywords": [
+    "xdb",
+    "memory",
+    "api",
+    "testing"
+  ],
+  "license": "MIT"
+}
