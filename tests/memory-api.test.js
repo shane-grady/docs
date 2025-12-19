@@ -15,6 +15,7 @@
 
 const { describe, it, before, after } = require('node:test');
 const assert = require('node:assert');
+const crypto = require('node:crypto');
 
 // =============================================================================
 // Configuration
@@ -22,6 +23,12 @@ const assert = require('node:assert');
 
 const BASE_URL = 'https://api.liam.netxd.com';
 const API_KEY = 'Ivt0b0on0BV8ghMhtkQrdKLTi1DWWVTtM5jdGaA';
+
+// ECDSA Private Key for signing requests (PEM format)
+// Replace with your actual private key
+const PRIVATE_KEY = `-----BEGIN PRIVATE KEY-----
+YOUR_PRIVATE_KEY_HERE
+-----END PRIVATE KEY-----`;
 
 // Test user keys - replace with valid keys for actual testing
 const TEST_CONFIG = {
@@ -31,11 +38,30 @@ const TEST_CONFIG = {
 };
 
 // =============================================================================
-// Helper Functions
+// ECDSA Signature Helper Functions
 // =============================================================================
 
 /**
- * Makes an API request to the XDB Memory API
+ * Signs the request body using ECDSA with SHA-256
+ * @param {string} data - The stringified request body
+ * @returns {string} Base64-encoded DER signature
+ */
+function signRequest(data) {
+  const sign = crypto.createSign('SHA256');
+  sign.update(data);
+  sign.end();
+
+  // Sign and get DER-encoded signature (Node.js crypto returns DER by default)
+  const signature = sign.sign(PRIVATE_KEY, 'base64');
+  return signature;
+}
+
+// =============================================================================
+// API Request Helper
+// =============================================================================
+
+/**
+ * Makes an authenticated API request to the LIAM Memory API
  * @param {string} endpoint - API endpoint path
  * @param {object} body - Request body
  * @param {object} options - Additional fetch options
@@ -43,15 +69,20 @@ const TEST_CONFIG = {
  */
 async function apiRequest(endpoint, body, options = {}) {
   const url = `${BASE_URL}${endpoint}`;
+  const bodyString = JSON.stringify(body);
+
+  // Generate ECDSA signature
+  const signature = signRequest(bodyString);
 
   const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': API_KEY,
+      'apiKey': API_KEY,
+      'signature': signature,
       ...options.headers,
     },
-    body: JSON.stringify(body),
+    body: bodyString,
     ...options,
   });
 

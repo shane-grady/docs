@@ -82,7 +82,29 @@ https://api.liam.netxd.com/
 
 ## Authentication
 
-The API requires an API key passed in the `x-api-key` header.
+The LIAM API uses ECDSA signature-based authentication. All requests require:
+
+| Header | Description |
+|--------|-------------|
+| `apiKey` | Your API key from connector registration |
+| `signature` | Base64-encoded ECDSA signature (DER format) of the request body |
+
+### Signature Generation
+
+1. **Algorithm**: ECDSA with P-256 curve and SHA-256 hashing
+2. **Sign**: The stringified JSON request body
+3. **Format**: DER-encoded, Base64 output
+
+### Configuration
+
+Update `memory-api.test.js` with your credentials:
+
+```javascript
+const API_KEY = 'your-api-key';
+const PRIVATE_KEY = `-----BEGIN PRIVATE KEY-----
+your-ecdsa-private-key-here
+-----END PRIVATE KEY-----`;
+```
 
 ## Request Body Examples
 
