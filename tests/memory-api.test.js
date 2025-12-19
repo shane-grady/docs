@@ -25,9 +25,10 @@ const BASE_URL = 'https://api.liam.netxd.com';
 const API_KEY = 'Ivt0b0on0BV8ghMhtkQrdKLTi1DWWVTtM5jdGaA';
 
 // ECDSA Private Key for signing requests (PEM format)
-// Replace with your actual private key
 const PRIVATE_KEY = `-----BEGIN PRIVATE KEY-----
-YOUR_PRIVATE_KEY_HERE
+MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg0C3EVfhq29fpvxeU
+JHP96Qf2iTcATg14W+HsuOC7ueChRANCAAQz6kTluY0JSlo0tnZ7jaWPNoeudS7q
+jm3tp4/Md2N5kongspvOEWx50s6JBq5EZcxvxMxssH5GK+cv8tD+M3GZ
 -----END PRIVATE KEY-----`;
 
 // Test user keys - replace with valid keys for actual testing
