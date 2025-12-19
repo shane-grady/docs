@@ -10,7 +10,7 @@
  * - Process Contract
  * - Generate Contract Markup
  *
- * Base URL: https://postman-rest-api-learner.glitch.me/
+ * Base URL: https://api.liam.netxd.com/
  */
 
 const { describe, it, before, after } = require('node:test');
@@ -20,11 +20,12 @@ const assert = require('node:assert');
 // Configuration
 // =============================================================================
 
-const BASE_URL = 'https://postman-rest-api-learner.glitch.me';
+const BASE_URL = 'https://api.liam.netxd.com';
+const API_KEY = 'Ivt0b0on0BV8ghMhtkQrdKLTi1DWWVTtM5jdGaA';
 
 // Test user keys - replace with valid keys for actual testing
 const TEST_CONFIG = {
-  validUserKey: 'c0312641aade88080be0c7f0801bc4dc6edbeb2752cb1530ae0483728e6a4f81',
+  validUserKey: '764f0fb139e37fc010c6094da980615b5e9542a4b9525a5f9d403c1c79bede67',
   invalidUserKey: 'invalid_user_key_12345',
   testSessionId: `test_session_${Date.now()}`,
 };
@@ -47,6 +48,7 @@ async function apiRequest(endpoint, body, options = {}) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'x-api-key': API_KEY,
       ...options.headers,
     },
     body: JSON.stringify(body),

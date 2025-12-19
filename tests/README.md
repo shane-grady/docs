@@ -77,8 +77,12 @@ const TEST_CONFIG = {
 ## API Base URL
 
 ```
-https://postman-rest-api-learner.glitch.me/
+https://api.liam.netxd.com/
 ```
+
+## Authentication
+
+The API requires an API key passed in the `x-api-key` header.
 
 ## Request Body Examples
 
